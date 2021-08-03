@@ -73,14 +73,7 @@ app.get('/summoner/:username', async (req,res) => {
         return listOfThings;
     }
 
-    const agoravai = () => {
-        let listOfThings = [];
-        for (var key of Object.keys(getAllChampions.data.data)) {
-            listOfThings.push(getAllChampions.data.data[key].id)
-        }
-
-        return listOfThings;
-    }
+    
     const responseRanked = await axios.get(
         `https://br1.api.riotgames.com/lol/league/v4/entries/by-summoner/${id}`,
         {headers : 
