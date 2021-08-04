@@ -77,10 +77,23 @@ router.get('/summoner/:username', async (req,res) => {
     })
     
     const {tier, rank, wins, losses, queueType} = responseRanked.data[1].queueType == 'RANKED_SOLO_5x5' ? responseRanked.data[1] : responseRanked.data[0];
-   
+    
+
+    const getMatch = await axios.get(
+        `https://br1.api.riotgames.com/lol/match/v4/matches/2322796408
+        `,
+        {headers : 
+            {
+                "X-Riot-Token": `${process.env.LEAGUE_API_KEY}`
+          
+      }}
+    ).catch( err => {
+        res.send(err);
+    })
     
     return res.json(
-    {
+    {   
+        summonerId: getSummonerId.data.id,
         summonerLevel,
         tier,
         rank,
@@ -92,13 +105,20 @@ router.get('/summoner/:username', async (req,res) => {
         
         champion1:`http://ddragon.leagueoflegends.com/cdn/11.15.1/img/champion/${getChampionsInfo()[0]}.png`,
         champion1Name : getChampionsInfo()[0].toLowerCase(),
+        champion1Id : getTopMasterys()[0],
         champion2:`http://ddragon.leagueoflegends.com/cdn/11.15.1/img/champion/${getChampionsInfo()[1]}.png`,
         champion2Name : getChampionsInfo()[1].toLowerCase(),
+        champion2Id : getTopMasterys()[1],
         champion3: `http://ddragon.leagueoflegends.com/cdn/11.15.1/img/champion/${getChampionsInfo()[2]}.png`,
         champion3Name : getChampionsInfo()[2].toLowerCase(),
+        champion3Id : getTopMasterys()[2],
+        
         
     }
     )
+
+
+   
     
 })
 

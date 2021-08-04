@@ -13,12 +13,9 @@ app.get('/', async (req,res) =>{
 })
 
 const summoner = require('./routes/summoner');
+const match = require('./routes/match');
 app.use('/', summoner);
-
-
-
-
-
+app.use('/', match);
 
 
 //STARTING SERVER
