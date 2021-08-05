@@ -27,7 +27,7 @@ router.get('/champion/:summonerId/:championName/:championId', async (req,res) =>
           
       }}
     ).catch( err => {
-        console.log(getLastMatch.data);
+        
         res.send(err);
     })
     
@@ -40,15 +40,48 @@ router.get('/champion/:summonerId/:championName/:championId', async (req,res) =>
        } 
     }
 
-    const {kills,deaths,assists} = getSummoner().stats
+    const getSpells = await axios.get(
+        `http://ddragon.leagueoflegends.com/cdn/11.15.1/data/en_US/summoner.json`,
+        {headers : 
+            {
+              "X-Riot-Token": `${process.env.LEAGUE_API_KEY}`
+          
+      }}
+    ).catch( err => {
+        
+        res.send(err);
+    })
     
-    return res.json(
-        {
-            championName,
-            kills,
-            deaths,
-            assists
+
+
+
+    const {kills,deaths,assists,win} = getSummoner().stats
+    const {spell1Id, spell2Id} = getSummoner();
+    
+    const getSpellName = () => {
+        let list = [];
+        for (const key of Object.keys(getSpells.data.data)) {
+            if(getSpells.data.data[key].key == spell1Id || getSpells.data.data[key].key == spell2Id){
+                list.push(getSpells.data.data[key].id);
+            }
         }
+
+        return list;
+    }
+
+
+    return res.json(
+        
+            {
+                kills,
+                deaths,
+                assists,
+                win,
+                spell1Url : `http://ddragon.leagueoflegends.com/cdn/11.15.1/img/spell/${getSpellName()[0]}.png`,
+                spell2Url : `http://ddragon.leagueoflegends.com/cdn/11.15.1/img/spell/${getSpellName()[1]}.png`,
+                champion :`http://ddragon.leagueoflegends.com/cdn/11.15.1/img/champion/${championName}.png`
+            }
+ 
     )
 });
 

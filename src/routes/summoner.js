@@ -93,7 +93,7 @@ router.get('/summoner/:username', async (req,res) => {
     
     return res.json(
     {   
-        summonerId: getSummonerId.data.id,
+        summonerId: getSummonerId.data.accountId,
         summonerLevel,
         tier,
         rank,
@@ -104,13 +104,13 @@ router.get('/summoner/:username', async (req,res) => {
         winRate :((wins / (wins + losses)) * 100).toFixed(1),
         
         champion1:`http://ddragon.leagueoflegends.com/cdn/11.15.1/img/champion/${getChampionsInfo()[0]}.png`,
-        champion1Name : getChampionsInfo()[0].toLowerCase(),
+        champion1Name : getChampionsInfo()[0],
         champion1Id : getTopMasterys()[0],
         champion2:`http://ddragon.leagueoflegends.com/cdn/11.15.1/img/champion/${getChampionsInfo()[1]}.png`,
-        champion2Name : getChampionsInfo()[1].toLowerCase(),
+        champion2Name : getChampionsInfo()[1],
         champion2Id : getTopMasterys()[1],
         champion3: `http://ddragon.leagueoflegends.com/cdn/11.15.1/img/champion/${getChampionsInfo()[2]}.png`,
-        champion3Name : getChampionsInfo()[2].toLowerCase(),
+        champion3Name : getChampionsInfo()[2],
         champion3Id : getTopMasterys()[2],
         
         

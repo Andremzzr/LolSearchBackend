@@ -18,9 +18,8 @@ app.use('/', summoner);
 app.use('/', match);
 
 
-//STARTING SERVER
-const PORT = 5000;
 
-app.listen(PORT,()=>{
-    console.log(`Server is runnin on http://localhost:${PORT}`)
+
+app.listen(process.env.PORT,()=>{
+    console.log(`Server is runnin on http://localhost:${process.env.PORT}`)
 });
